@@ -78,12 +78,46 @@
     // --------------------------------------------------------------
     //
     // test if a specific row on this board contains a conflict
+    //Input: number (the row index)
+    //Output: boolean  ? (number = index)
+    //Constraints: None
+    //Edge Cases: anything that's not a number, number larger than the board
+    //negative number
     hasRowConflictAt: function(rowIndex) {
-      return false; // fixme
+      if (typeof rowIndex !== 'number') {
+        return false;
+      } else if (!this._isInBounds(rowIndex, 0)) {
+        return false;
+      } 
+  
+      var count = 0;
+      var row = this.get(rowIndex); // [0, 1, 0, 0]
+      // console.log(row);
+      for (var i = 0; i < row.length; i++) {
+        if (row[i]) {
+          count++;
+          if (count > 1) {
+            return true;
+          }
+        }
+      }
+      console.log(count);
+      return false; //  fixme
     },
 
     // test if any rows on this board contain conflicts
+    //Input: None
+    //Ouput: Boolean
+    //Constraints: None
+    //Edge Cases: None (empty matrix)
     hasAnyRowConflicts: function() {
+      var numRows = this.get('n');
+      
+      for (var i = 0; i < numRows; i++) {
+        if (this.hasRowConflictAt(i)) {
+          return true;
+        }
+      }
       return false; // fixme
     },
 
@@ -94,12 +128,35 @@
     //
     // test if a specific column on this board contains a conflict
     hasColConflictAt: function(colIndex) {
-      return false; // fixme
+      if (typeof colIndex !== 'number') {
+        return false;
+      } else if (!this._isInBounds(0, colIndex)) {
+        return false;
+      } 
+  
+      var count = 0;
+      var numRows = this.get('n');
+      for (var i = 0; i < numRows; i++) {
+        if (this.get(i)[colIndex]) {
+          count++;
+          if (count > 1) {
+            return true;
+          }
+        }
+      }
+      return false; //  fixme
     },
 
     // test if any columns on this board contain conflicts
     hasAnyColConflicts: function() {
-      return false; // fixme
+      var numCols = this.get('n');
+      
+      for (var i = 0; i < numCols; i++) {
+        if (this.hasColConflictAt(i)) {
+          return true;
+        }
+      }
+      return false; 
     },
 
 
