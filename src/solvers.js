@@ -18,12 +18,15 @@
 //Output: board
 //Constraints: None
 //EdgeCases: negative numbers 
+
+//************* Add boards found variable/array ? -> 
 window.findNRooksSolution = function(n) {
   if (n < 1) {
     return false;
   }
-  var solution = new Board({'n':n});
-  
+  var emptyBoard = new Board({'n':n});
+  var solutions = [];
+  console.log(emptyBoard);
   
   // var empty = [];
   // empty.length = n;
@@ -32,54 +35,68 @@ window.findNRooksSolution = function(n) {
   //   solution.push(empty);
   // }
   
-  var numOfPiecesAdded = 0;
+  // var numOfPiecesAdded = 0;
   
   //Input: board
   //Ouput: board
   //Constraints: None
   //Edge Cases: None
-  var addRook = function(board) {
-    if (numOfPiecesAdded === n) {
-      return this;
-    }
+  var addRook = function(numOfRooks, lengthOfBoard) {
+    if (numOfRooks === n) {
+      solutions.push(JSON.stringify(this));
+      return;
+    } // else if (board === false) {
+    //   return false; //exit the loop
+    // }
+    console.log(this);
 
-    //check if has any conflicts (use helper function) 
-      //hasRowConflictAt.call(board, rowIndex)
-        //check rows && columns
-      //if there's a conflict then return falsey (stop our recursion on that tree)
+              //determine if the return value is not false
+                // if so -> push it's solution to a solution array
+    for (var numRow = 0; numRow < lengthOfBoard; numRow++) {
+      var row = this.get(numRow); // 0,0 
 
-    //Loop through every row of board
-      //loop through every column of every row
-        //check if that square is occupied 
-          //if not occupied -> put a rook there
-            //add to our count of rooks
-            //call the addRook function recursively and push it's solution to a solution array
-    
+      for (var numCol = 0; numCol < lengthOfBoard; numCol++) {
+        if (row[numCol] === 0) { // 0
+          //toggle from 0 to 1
+          this.togglePiece(numRow, numCol); // 0 -> 1
+          // console.log(this.attributes[row][numCol]); // should be 1
+          // console.log(this.get(row)[numCol]); // should be 1;
+          if (!this.hasAnyRowConflicts(this) && !this.hasAnyColConflicts(this)) {
+            //handle this return statement
+            addRook.call(this, numOfRooks + 1);
+            
+          }
+          // ********************
+          //toggle from 1 to 0
+          this.togglePiece(numRow, numCol); //NOT TOGGLE -> CHANGE TO -1
 
-
-    for (var i = 0; i < this.get('n'); i++) {
-      for (var x = 0; x < this.get('n'); x++) {
-        //empty board
-        var board = this;
-        if (!this.get(i)[x]) {
-          
-          
-          board.get(i)[x] = 1;
-           return addRook.call(board);
+          // ********************
+          // ********************
+          // ********************
+          // ********************
+          // ********************
+          // ********************// ********************
+          // ********************
+          //THIS CHANGES ENTIRE BOARD TO -1 (IMMEDIATELY?)
+          // row[numCol] = -1;
         }
+
       }
     }
 
   };
   
-  addRook.call(solution);
-  console.log('Single solution for ' + n + ' rooks:', JSON.stringify(solution));
-  return solution;
+  //function addRook(numOfRooks, lengthOfBoard)
+  addRook.call(emptyBoard, 0, n);
+  // console.log('Single solution for ' + n + ' rooks:', JSON.stringify(...solutions));
+  // console.log(solutions);
+  return solutions;
 };
 
 // return the number of nxn chessboards that exist, with n rooks placed such that none of them can attack each other
 window.countNRooksSolutions = function(n) {
-  var solutionCount = undefined; //fixme
+  // var boardsFound = [];
+  var solutionCount = findNRooksSolution(n).length; //fixme
 
   console.log('Number of solutions for ' + n + ' rooks:', solutionCount);
   return solutionCount;
