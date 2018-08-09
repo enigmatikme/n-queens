@@ -24,9 +24,18 @@ window.findNRooksSolution = function(n) {
   if (n < 1) {
     return false;
   }
+  // ********************
+  // ********************
+  // ********************
+  // ********************
+  // ********************
+  // ********************
+  // ********************
+  // ********************
+  n = 4;
   var emptyBoard = new Board({'n':n});
   var solutions = [];
-  console.log(emptyBoard);
+  // console.log(emptyBoard);
   
   // var empty = [];
   // empty.length = n;
@@ -43,13 +52,16 @@ window.findNRooksSolution = function(n) {
   //Edge Cases: None
   var addRook = function(numOfRooks, lengthOfBoard) {
     if (numOfRooks === n) {
-      solutions.push(JSON.stringify(this));
+      var potentialSolution = JSON.stringify(this.attributes);
+      if (!solutions.includes(potentialSolution)) {
+        solutions.push(potentialSolution);
+      }
       return;
     } // else if (board === false) {
     //   return false; //exit the loop
     // }
-    console.log(this);
-
+    // console.log(this);
+    
               //determine if the return value is not false
                 // if so -> push it's solution to a solution array
     for (var numRow = 0; numRow < lengthOfBoard; numRow++) {
@@ -63,12 +75,10 @@ window.findNRooksSolution = function(n) {
           // console.log(this.get(row)[numCol]); // should be 1;
           if (!this.hasAnyRowConflicts(this) && !this.hasAnyColConflicts(this)) {
             //handle this return statement
-            addRook.call(this, numOfRooks + 1);
+            addRook.call(this, numOfRooks + 1, lengthOfBoard);
             
           }
-          // ********************
-          //toggle from 1 to 0
-          this.togglePiece(numRow, numCol); //NOT TOGGLE -> CHANGE TO -1
+          this.togglePiece(numRow, numCol); 
 
           // ********************
           // ********************
@@ -77,7 +87,6 @@ window.findNRooksSolution = function(n) {
           // ********************
           // ********************// ********************
           // ********************
-          //THIS CHANGES ENTIRE BOARD TO -1 (IMMEDIATELY?)
           // row[numCol] = -1;
         }
 
@@ -88,8 +97,9 @@ window.findNRooksSolution = function(n) {
   
   //function addRook(numOfRooks, lengthOfBoard)
   addRook.call(emptyBoard, 0, n);
-  // console.log('Single solution for ' + n + ' rooks:', JSON.stringify(...solutions));
-  // console.log(solutions);
+  debugger;
+  console.log('Single solution for ' + n + ' rooks:', JSON.stringify(...solutions));
+  console.log(solutions);
   return solutions;
 };
 

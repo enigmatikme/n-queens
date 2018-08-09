@@ -93,7 +93,7 @@
       let count = 0;
       var row = this.get(rowIndex); // [0, 1, 0, 0]
       for (var i = 0; i < row.length; i++) {
-        if (row[i]) {
+        if (row[i] === 1) {
           count++;
           if (count > 1) {
             return true;
@@ -135,8 +135,8 @@
   
       let count = 0;
       var numRows = this.get('n');
-      for (var i = 0; i < numRows; i++) {
-        if (this.get(i)[colIndex]) {
+      for (var row = 0; row < numRows; row++) {
+        if (this.get(row)[colIndex] === 1) {
           count++;
           if (count > 1) {
             return true;
