@@ -14,10 +14,65 @@
 // return a matrix (an array of arrays) representing a single nxn chessboard, with n rooks placed such that none of them can attack each other
 
 
-
+//Input: number (area of the board, length of each side)
+//Output: board
+//Constraints: None
+//EdgeCases: negative numbers 
 window.findNRooksSolution = function(n) {
-  var solution = undefined; //fixme
+  if (n < 1) {
+    return false;
+  }
+  var solution = new Board({'n':n});
+  
+  
+  // var empty = [];
+  // empty.length = n;
+  // empty.fill(0);
+  // for (var i = 0; i < n; i++) {
+  //   solution.push(empty);
+  // }
+  
+  var numOfPiecesAdded = 0;
+  
+  //Input: board
+  //Ouput: board
+  //Constraints: None
+  //Edge Cases: None
+  var addRook = function(board) {
+    if (numOfPiecesAdded === n) {
+      return this;
+    }
 
+    //check if has any conflicts (use helper function) 
+      //hasRowConflictAt.call(board, rowIndex)
+        //check rows && columns
+      //if there's a conflict then return falsey (stop our recursion on that tree)
+
+    //Loop through every row of board
+      //loop through every column of every row
+        //check if that square is occupied 
+          //if not occupied -> put a rook there
+            //add to our count of rooks
+            //call the addRook function recursively and push it's solution to a solution array
+    
+
+
+    for (var i = 0; i < this.get('n'); i++) {
+      for (var x = 0; x < this.get('n'); x++) {
+        //empty board
+        var board = this;
+        if (!this.get(i)[x]) {
+          
+          
+          board.get(i)[x] = 1;
+           return addRook.call(board);
+        }
+      }
+    }
+
+  };
+  
+  addRook.call(solution);
   console.log('Single solution for ' + n + ' rooks:', JSON.stringify(solution));
   return solution;
 };
