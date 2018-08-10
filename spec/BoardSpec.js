@@ -1,5 +1,5 @@
 describe('Board', function() {
-
+  
   var capitalize = function(word) {
     return word[0].toUpperCase() + word.slice(1);
   };
@@ -18,7 +18,7 @@ describe('Board', function() {
       });
     });
   };
-
+  
   describe('Empty board', function() {
     verifyConflictTypes([''], [
       [0, 0, 0, 0],
